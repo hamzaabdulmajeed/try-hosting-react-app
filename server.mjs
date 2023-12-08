@@ -9,12 +9,34 @@ import commentRouter from './routes/comment.mjs'
 import feedRouter from './routes/feed.mjs'
 import postRouter from './routes/post.mjs'
 
-
+import mongoose from 'mongodb'
 
 
 const app = express();
 app.use(express.json()); // body parser
-app.use(cors())
+app.use(cors(
+{
+    origin: ["https://deploy-mern-.vecel.app"],
+    methods:["POST","GET"],
+    credentials:true
+}
+    ))
+    const connectDB = async () => {
+        try {
+          await mongoose.connect('mongoose.connect(`mongodb+srv://hamzaabdulmajeed863:mhamzaee1@cluster0.xkuy2mb.mongodb.net/cruddb?retryWrites=true&w=majority`)', {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+          });
+          console.log('Connected to MongoDB');
+        } catch (error) {
+          console.error('Error connecting to MongoDB:', error.message);
+        }
+      };
+      
+      // Call the connectDB function to establish the connection
+      connectDB();
+    
+    
 
 // /api/v1/login
 app.use("/api/v1", authRouter)
