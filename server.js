@@ -42,5 +42,3 @@ app.listen(PORT, () => {
   console.log(`Example server listening on port ${PORT}`);
 });
 
-// Export the Express API
-module.exports = app
