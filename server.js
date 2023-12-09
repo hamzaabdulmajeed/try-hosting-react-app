@@ -4,7 +4,7 @@ const express = require('express');
 // const _dirname = path.resolve();
 
 // const authRouter =require("./routes/auth.js");
-const postRouter =require("./routes/post.js");
+// const postRouter =require("./routes/post.js");
 // import commentRouter from './routes/comment.mjs'
 // import feedRouter from './routes/feed.mjs'
 // import postRouter from "./routes/post.mjs";
@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
 //   }
 // });
 
-app.use("/api/v1", postRouter); // Secure api
+// app.use("/api/v1", postRouter); // Secure api
 
 //     /static/vscode_windows.exe
 // app.use("/static", express.static(path.join(__dirname, "static")));
