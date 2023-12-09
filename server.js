@@ -20,22 +20,22 @@ app.get("/", (req, res) => {
 // /api/v1/login
 // app.use("/api/v1", authRouter);
 
-// app.use((req, res, next) => {
-//   // JWT
-//   let token = "valid";
-//   if (token === "valid") {
-//     next();
-//   } else {
-//     res.status(401).send({ message: "invalid token" });
-//   }
-// });
+app.use((req, res, next) => {
+  // JWT
+  let token = "valid";
+  if (token === "valid") {
+    next();
+  } else {
+    res.status(401).send({ message: "invalid token" });
+  }
+});
 
 // app.use("/api/v1", postRouter); // Secure api
 
 //     /static/vscode_windows.exe
 // app.use("/static", express.static(path.join(__dirname, "static")));
 
-// app.use(express.static(path.join(__dirname, "static")));
+app.use(express.static(path.join(__dirname, "static")));
 
 const PORT = 4000;
 app.listen(PORT, () => {
