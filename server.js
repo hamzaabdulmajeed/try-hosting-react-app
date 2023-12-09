@@ -1,16 +1,17 @@
-import express from "express";
-import cors from "cors";
-import path from "path";
-const __dirname = path.resolve();
+const express = require('express');
+const cors = require("cors");
+const path =require('path');
+const _dirname = path.resolve();
 
-// import authRouter from "./routes/auth.mjs";
+// const authRouter =require("./routes/auth.mjs");
+// const postRouter =require("./routes/post.js");
 // import commentRouter from './routes/comment.mjs'
 // import feedRouter from './routes/feed.mjs'
 // import postRouter from "./routes/post.mjs";
 
 const app = express();
-app.use(express.json()); // body parser
-app.use(cors());
+// app.use(express.json()); // body parser
+// app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Welcome to my server!");
@@ -36,7 +37,7 @@ app.use((req, res, next) => {
 
 // app.use(express.static(path.join(__dirname, "static")));
 
-const PORT = process.env.PORT || 4000;
+const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`Example server listening on port ${PORT}`);
 });
