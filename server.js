@@ -35,7 +35,7 @@ app.use((req, res, next) => {
 //     /static/vscode_windows.exe
 // app.use("/static", express.static(path.join(__dirname, "static")));
 
-app.use(express.static(path.join(__dirname, "static")));
+// app.use(express.static(path.join(__dirname, "static")));
 
 const PORT = 4000;
 app.listen(PORT, () => {
