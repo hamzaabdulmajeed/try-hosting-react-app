@@ -30,7 +30,7 @@ app.use((req, res, next) => {
   }
 });
 
-// app.use("/api/v1", postRouter); // Secure api
+app.use("/api/v1", postRouter); // Secure api
 
 //     /static/vscode_windows.exe
 // app.use("/static", express.static(path.join(__dirname, "static")));
