@@ -3,8 +3,8 @@ const cors = require("cors");
 const path =require('path');
 const _dirname = path.resolve();
 
-// const authRouter =require("./routes/auth.mjs");
-// const postRouter =require("./routes/post.js");
+const authRouter =require("./routes/auth.js");
+const postRouter =require("./routes/post.js");
 // import commentRouter from './routes/comment.mjs'
 // import feedRouter from './routes/feed.mjs'
 // import postRouter from "./routes/post.mjs";
@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
 });
 
 // /api/v1/login
-// app.use("/api/v1", authRouter);
+app.use("/api/v1", authRouter);
 
 app.use((req, res, next) => {
   // JWT
