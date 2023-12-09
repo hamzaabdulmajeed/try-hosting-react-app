@@ -3,10 +3,10 @@ import cors from "cors";
 import path from "path";
 const __dirname = path.resolve();
 
-import authRouter from "./routes/auth.mjs";
+// import authRouter from "./routes/auth.mjs";
 // import commentRouter from './routes/comment.mjs'
 // import feedRouter from './routes/feed.mjs'
-import postRouter from "./routes/post.mjs";
+// import postRouter from "./routes/po/st.mjs";
 
 const app = express();
 app.use(express.json()); // body parser
@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 });
 
 // /api/v1/login
-app.use("/api/v1", authRouter);
+// app.use("/api/v1", authRouter);
 
 app.use((req, res, next) => {
   // JWT
@@ -29,12 +29,12 @@ app.use((req, res, next) => {
   }
 });
 
-app.use("/api/v1", postRouter); // Secure api
+// app.use("/api/v1", postRouter); // Secure api
 
-//     /static/vscode_windows.exe
-app.use("/static", express.static(path.join(__dirname, "static")));
+// //     /static/vscode_windows.exe
+// app.use("/static", express.static(path.join(__dirname, "static")));
 
-app.use(express.static(path.join(__dirname, "./web/build")));
+// app.use(express.static(path.join(__dirname, "./web/build")));
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
