@@ -1,7 +1,7 @@
 const express = require('express');
-// const cors = require("cors");
-// const path =require('path');
-// const _dirname = path.resolve();
+const cors = require("cors");
+const path =require('path');
+const _dirname = path.resolve();
 
 // const authRouter =require("./routes/auth.js");
 // const postRouter =require("./routes/post.js");
@@ -10,7 +10,7 @@ const express = require('express');
 // import postRouter from "./routes/post.mjs";
 
 const app = express();
-// app.use(express.json()); // body parser
+app.use(express.json()); // body parser
 // app.use(cors());
 
 app.get("/", (req, res) => {
