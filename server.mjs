@@ -9,32 +9,32 @@ import commentRouter from './routes/comment.mjs'
 import feedRouter from './routes/feed.mjs'
 import postRouter from './routes/post.mjs'
 
-import mongoose from 'mongodb'
+// import mongoose from 'mongodb'
 
 
 const app = express();
 app.use(express.json()); // body parser
 app.use(cors(
-{
-    origin: ["https://deploy-mern-.vecel.app"],
-    methods:["POST","GET"],
-    credentials:true
-}
+// {
+//     origin: ["https://deploy-mern-.vecel.app"],
+//     methods:["POST","GET"],
+//     credentials:true
+// }
     ))
-    const connectDB = async () => {
-        try {
-          await mongoose.connect('mongoose.connect(`mongodb+srv://hamzaabdulmajeed863:mhamzaee1@cluster0.xkuy2mb.mongodb.net/cruddb?retryWrites=true&w=majority`)', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-          });
-          console.log('Connected to MongoDB');
-        } catch (error) {
-          console.error('Error connecting to MongoDB:', error.message);
-        }
-      };
+    // const connectDB = async () => {
+    //     try {
+    //       await mongoose.connect('mongoose.connect(`mongodb+srv://hamzaabdulmajeed863:mhamzaee1@cluster0.xkuy2mb.mongodb.net/cruddb?retryWrites=true&w=majority`)', {
+    //         useNewUrlParser: true,
+    //         useUnifiedTopology: true,
+    //       });
+    //       console.log('Connected to MongoDB');
+    //     } catch (error) {
+    //       console.error('Error connecting to MongoDB:', error.message);
+    //     }
+    //   };
       
-      // Call the connectDB function to establish the connection
-      connectDB();
+    //   // Call the connectDB function to establish the connection
+    //   connectDB();
     
     
 
@@ -58,7 +58,7 @@ app.use("/api/v1", postRouter) // Secure api
 //     /static/vscode_windows.exe
 app.use("/static", express.static(path.join(__dirname, 'static')))
 
-app.use(express.static(path.join(__dirname, './web/build')))
+app.use(express.static(path.join(__dirname, 'static')))
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
