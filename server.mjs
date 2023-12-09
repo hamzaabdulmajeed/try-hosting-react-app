@@ -21,6 +21,9 @@ app.use(cors(
 //     credentials:true
 // }
     ))
+    app.get('/', (req, res) => {
+        res.send('Welcome to my server!');
+      });
     // const connectDB = async () => {
     //     try {
     //       await mongoose.connect('mongoose.connect(`mongodb+srv://hamzaabdulmajeed863:mhamzaee1@cluster0.xkuy2mb.mongodb.net/cruddb?retryWrites=true&w=majority`)', {
