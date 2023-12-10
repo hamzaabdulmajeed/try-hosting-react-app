@@ -265,7 +265,7 @@ const col = db.collection("posts");
 const router = express.Router();
 
 // POST /api/v1/post
-router.post('/post', (req, res, next) => {
+router.get('/post', (req, res, next) => {
     const { title, text } = req.body;
 
     const isValidRequest = title && text;
