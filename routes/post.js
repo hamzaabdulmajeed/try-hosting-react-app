@@ -256,13 +256,15 @@
 
 // module.exports = router;
 const express = require('express');
-// const { client } = require('./../mongodb.js');
-// const { ObjectId } = require('mongodb');
-
-// const db = client.db("cruddb");
-// const col = db.collection("posts");
 
 const router = express.Router();
+
+const { client } = require('./../mongodb');
+const { ObjectId } = require('mongodb');
+
+const db = client.db("cruddb");
+const col = db.collection("posts");
+
 
 // router.get('/post', (req, res, next) => {
 //     console.log('this!', new Date());
