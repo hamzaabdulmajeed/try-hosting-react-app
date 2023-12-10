@@ -264,10 +264,10 @@ const express = require('express');
 
 const router = express.Router();
 
-// router.get('/post', (req, res, next) => {
-//     console.log('this!', new Date());
-//     res.send('this' + new Date());
-// });
+router.get('/post', (req, res, next) => {
+    console.log('this!', new Date());
+    res.send('this' + new Date());
+});
 
 // POST /api/v1/post
 // router.get('/post', (req, res, next) => {
