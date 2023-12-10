@@ -130,49 +130,49 @@
 
 // export default router
 // import { nanoid } from 'nanoid';
-const express = require('express');
-const  nanoid  = require('nanoid');
-const { client } = require('./../mongodb.js');
-const { ObjectId } = require('mongodb');
+// const express = require('express');
+// // const  nanoid  = require('nanoid');
+// const { client } = require('./../mongodb.js');
+// const { ObjectId } = require('mongodb');
 
-const db = client.db("cruddb");
-const col = db.collection("posts");
+// const db = client.db("cruddb");
+// const col = db.collection("posts");
 
-const router = express.Router();
+// const router = express.Router();
 
-// POST    /api/v1/post
-router.get('/post', (req, res, next) => {
-    console.log('this is signup!', new Date());
-    res.send('this is post' + new Date());
-    // if (
-    //     !req.body.title
-    //     || !req.body.text
-    // ) {
-    //     res.status(403);
-    //     res.send(`required parameters missing, 
-    //     example request body:
-    //     {
-    //         title: "abc post title",
-    //         text: "some post text"
-    //     } `);
-    //     return;
-    // }
+// // POST    /api/v1/post
+// router.get('/post', async (req, res, next) => {
+//     console.log('this is signup!', new Date());
+//     res.send('this is post' + new Date());
+//     if (
+//         !req.body.title
+//         || !req.body.text
+//     ) {
+//         res.status(403);
+//         res.send(`required parameters missing, 
+//         example request body:
+//         {
+//             title: "abc post title",
+//             text: "some post text"
+//         } `);
+//         return;
+//     }
 
-    // try {
-    //     const insertResponse = await col.insertOne({
-    //         // _id: "7864972364724b4h2b4jhgh42",
-    //         title: req.body.title,
-    //         text: req.body.text,
-    //         createdOn: new Date()
-    //     });
-    //     console.log("insertResponse: ", insertResponse);
+//     try {
+//         const insertResponse = await col.insertOne({
+//             // _id: "7864972364724b4h2b4jhgh42",
+//             title: req.body.title,
+//             text: req.body.text,
+//             createdOn: new Date()
+//         });
+//         console.log("insertResponse: ", insertResponse);
 
-    //     res.send('post created');
-    // } catch (e) {
-    //     console.log("error inserting mongodb: ", e);
-    //     res.status(500).send('server error, please try later');
-    // }
-});
+//         res.send('post created');
+//     } catch (e) {
+//         console.log("error inserting mongodb: ", e);
+//         res.status(500).send('server error, please try later');
+//     }
+// });
 
 // router.get('/posts', async (req, res, next) => {
 
@@ -245,7 +245,7 @@ router.get('/post', (req, res, next) => {
 //       res.send('post deleted');
 //   } catch (e) {
 //       console.log("error deleting mongodb: ", e);
-    //   res.status(500).send('server error, please try later');
+//       res.status(500).send('server error, please try later');
 //   }
 
 //   // const deleteResponse = await pcIndex.deleteOne(req.params.postId)
@@ -253,5 +253,101 @@ router.get('/post', (req, res, next) => {
 
 //   // res.send('post deleted');
 // });
+
+// module.exports = router;
+const express = require('express');
+const { client } = require('./../mongodb.js');
+const { ObjectId } = require('mongodb');
+
+const db = client.db("cruddb");
+const col = db.collection("posts");
+
+const router = express.Router();
+
+// POST /api/v1/post
+router.post('/post', async (req, res, next) => {
+    const { title, text } = req.body;
+
+    const isValidRequest = title && text;
+
+    try {
+        if (isValidRequest) {
+            const insertResponse = await col.insertOne({
+                title,
+                text,
+                createdOn: new Date()
+            });
+            console.log("insertResponse: ", insertResponse);
+
+            res.send('post created');
+        } else {
+            res.status(403).send(`Required parameters missing. Example request body: { "title": "abc post title", "text": "some post text" }`);
+        }
+    } catch (e) {
+        console.log("error inserting mongodb: ", e);
+        res.status(500).send('Server error, please try later');
+    }
+});
+
+// GET /api/v1/posts
+router.get('/posts', async (req, res, next) => {
+    try {
+        const cursor = col.find({})
+            .sort({ _id: -1 })
+            .limit(100);
+
+        const results = await cursor.toArray();
+        console.log("results: ", results);
+        res.send(results);
+    } catch (e) {
+        console.log("error getting data from mongodb: ", e);
+        res.status(500).send('Server error, please try later');
+    }
+});
+
+// PUT /api/v1/post/:postId
+router.put('/post/:postId', async (req, res, next) => {
+    const { title, text } = req.body;
+    const postId = req.params.postId;
+
+    const isValidRequest = ObjectId.isValid(postId) && (title || text);
+
+    try {
+        if (isValidRequest) {
+            const updateResponse = await col.updateOne(
+                { _id: new ObjectId(postId) },
+                { $set: { title, text } }
+            );
+            console.log("updateResponse: ", updateResponse);
+
+            res.send('Post updated');
+        } else {
+            res.status(403).send(`Invalid request. At least one of "title" or "text" is required.`);
+        }
+    } catch (e) {
+        console.log("error updating mongodb: ", e);
+        res.status(500).send('Server error, please try later');
+    }
+});
+
+// DELETE /api/v1/post/:postId
+router.delete('/post/:postId', async (req, res, next) => {
+    const postId = req.params.postId;
+
+    const isValidRequest = ObjectId.isValid(postId);
+
+    try {
+        if (isValidRequest) {
+            const deleteResponse = await col.deleteOne({ _id: new ObjectId(postId) });
+            console.log("deleteResponse: ", deleteResponse);
+            res.send('Post deleted');
+        } else {
+            res.status(403).send(`Invalid post id`);
+        }
+    } catch (e) {
+        console.log("error deleting mongodb: ", e);
+        res.status(500).send('Server error, please try later');
+    }
+});
 
 module.exports = router;
