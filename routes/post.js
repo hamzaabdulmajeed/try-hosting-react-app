@@ -270,8 +270,8 @@ const router = express.Router();
 // });
 
 // POST /api/v1/post
-// router.get('/post', (req, res, next) => {
-//     res.send('post' + new Date());
+router.get('/post', (req, res, next) => {
+    res.send('post' + new Date());
     // const { title, text } = req.body;
 
     // const isValidRequest = title && text;
@@ -298,7 +298,7 @@ const router = express.Router();
     //     console.log("error inserting mongodb: ", e);
     //     res.status(500).send('Server error, please try later');
     // }
-// });
+});
 
 // GET /api/v1/posts
 // router.get('/posts', (req, res, next) => {
