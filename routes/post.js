@@ -301,82 +301,82 @@ router.get('/post', (req, res, next) => {
 });
 
 // GET /api/v1/posts
-// router.get('/posts', (req, res, next) => {
-//     try {
-//         const cursor = col.find({})
-//             .sort({ _id: -1 })
-//             .limit(100);
+router.get('/posts', (req, res, next) => {
+    try {
+        const cursor = col.find({})
+            .sort({ _id: -1 })
+            .limit(100);
 
-//         cursor.toArray((err, results) => {
-//             if (err) {
-//                 console.log("error getting data from mongodb: ", err);
-//                 res.status(500).send('Server error, please try later');
-//             } else {
-//                 console.log("results: ", results);
-//                 res.send(results);
-//             }
-//         });
-//     } catch (e) {
-//         console.log("error getting data from mongodb: ", e);
-//         res.status(500).send('Server error, please try later');
-//     }
-// });
+        cursor.toArray((err, results) => {
+            if (err) {
+                console.log("error getting data from mongodb: ", err);
+                res.status(500).send('Server error, please try later');
+            } else {
+                console.log("results: ", results);
+                res.send(results);
+            }
+        });
+    } catch (e) {
+        console.log("error getting data from mongodb: ", e);
+        res.status(500).send('Server error, please try later');
+    }
+});
 
-// // PUT /api/v1/post/:postId
-// router.put('/post/:postId', (req, res, next) => {
-//     const { title, text } = req.body;
-//     const postId = req.params.postId;
+// PUT /api/v1/post/:postId
+router.put('/post/:postId', (req, res, next) => {
+    const { title, text } = req.body;
+    const postId = req.params.postId;
 
-//     const isValidRequest = ObjectId.isValid(postId) && (title || text);
+    const isValidRequest = ObjectId.isValid(postId) && (title || text);
 
-//     try {
-//         if (isValidRequest) {
-//             col.updateOne(
-//                 { _id: new ObjectId(postId) },
-//                 { $set: { title, text } },
-//                 (err, result) => {
-//                     if (err) {
-//                         console.log("error updating mongodb: ", err);
-//                         res.status(500).send('Server error, please try later');
-//                     } else {
-//                         console.log("updateResponse: ", result);
-//                         res.send('Post updated');
-//                     }
-//                 }
-//             );
-//         } else {
-//             res.status(403).send(`Invalid request. At least one of "title" or "text" is required.`);
-//         }
-//     } catch (e) {
-//         console.log("error updating mongodb: ", e);
-//         res.status(500).send('Server error, please try later');
-//     }
-// });
+    try {
+        if (isValidRequest) {
+            col.updateOne(
+                { _id: new ObjectId(postId) },
+                { $set: { title, text } },
+                (err, result) => {
+                    if (err) {
+                        console.log("error updating mongodb: ", err);
+                        res.status(500).send('Server error, please try later');
+                    } else {
+                        console.log("updateResponse: ", result);
+                        res.send('Post updated');
+                    }
+                }
+            );
+        } else {
+            res.status(403).send(`Invalid request. At least one of "title" or "text" is required.`);
+        }
+    } catch (e) {
+        console.log("error updating mongodb: ", e);
+        res.status(500).send('Server error, please try later');
+    }
+});
 
-// // DELETE /api/v1/post/:postId
-// router.delete('/post/:postId', (req, res, next) => {
-//     const postId = req.params.postId;
+// DELETE /api/v1/post/:postId
+router.delete('/post/:postId', (req, res, next) => {
+    const postId = req.params.postId;
 
-//     const isValidRequest = ObjectId.isValid(postId);
+    const isValidRequest = ObjectId.isValid(postId);
 
-//     try {
-//         if (isValidRequest) {
-//             col.deleteOne({ _id: new ObjectId(postId) }, (err, result) => {
-//                 if (err) {
-//                     console.log("error deleting mongodb: ", err);
-//                     res.status(500).send('Server error, please try later');
-//                 } else {
-//                     console.log("deleteResponse: ", result);
-//                     res.send('Post deleted');
-//                 }
-//             });
-//         } else {
-//             res.status(403).send(`Invalid post id`);
-//         }
-//     } catch (e) {
-//         console.log("error deleting mongodb: ", e);
-//         res.status(500).send('Server error, please try later');
-//     }
-// });
+    try {
+        if (isValidRequest) {
+            col.deleteOne({ _id: new ObjectId(postId) }, (err, result) => {
+                if (err) {
+                    console.log("error deleting mongodb: ", err);
+                    res.status(500).send('Server error, please try later');
+                } else {
+                    console.log("deleteResponse: ", result);
+                    res.send('Post deleted');
+                }
+            });
+        } else {
+            res.status(403).send(`Invalid post id`);
+        }
+    } catch (e) {
+        console.log("error deleting mongodb: ", e);
+        res.status(500).send('Server error, please try later');
+    }
+});
 
 module.exports = router;
