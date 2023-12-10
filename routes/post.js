@@ -266,7 +266,7 @@ const router = express.Router();
 
 router.get('/post', (req, res, next) => {
     console.log('this!', new Date());
-    res.send('this' + new Date());
+    // res.send('this' + new Date());
 
     const { title, text } = req.body;
 
