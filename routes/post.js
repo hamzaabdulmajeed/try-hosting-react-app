@@ -256,18 +256,18 @@
 
 // module.exports = router;
 const express = require('express');
-const { client } = require('./../mongodb.js');
-const { ObjectId } = require('mongodb');
+// const { client } = require('./../mongodb.js');
+// const { ObjectId } = require('mongodb');
 
-const db = client.db("cruddb");
-const col = db.collection("posts");
+// const db = client.db("cruddb");
+// const col = db.collection("posts");
 
 const router = express.Router();
 
-router.get('/post', (req, res, next) => {
-    console.log('this!', new Date());
-    res.send('this' + new Date());
-});
+// router.get('/post', (req, res, next) => {
+//     console.log('this!', new Date());
+//     res.send('this' + new Date());
+// });
 
 // POST /api/v1/post
 // router.get('/post', (req, res, next) => {
