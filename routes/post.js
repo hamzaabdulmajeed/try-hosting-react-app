@@ -143,35 +143,35 @@ const router = express.Router();
 // POST    /api/v1/post
 router.get('/post', async (req, res, next) => {
     console.log('this is signup!', new Date());
+    res.send('this is post' + new Date());
+    // if (
+    //     !req.body.title
+    //     || !req.body.text
+    // ) {
+    //     res.status(403);
+    //     res.send(`required parameters missing, 
+    //     example request body:
+    //     {
+    //         title: "abc post title",
+    //         text: "some post text"
+    //     } `);
+    //     return;
+    // }
 
-    if (
-        !req.body.title
-        || !req.body.text
-    ) {
-        res.status(403);
-        res.send(`required parameters missing, 
-        example request body:
-        {
-            title: "abc post title",
-            text: "some post text"
-        } `);
-        return;
-    }
+    // try {
+    //     const insertResponse = await col.insertOne({
+    //         // _id: "7864972364724b4h2b4jhgh42",
+    //         title: req.body.title,
+    //         text: req.body.text,
+    //         createdOn: new Date()
+    //     });
+    //     console.log("insertResponse: ", insertResponse);
 
-    try {
-        const insertResponse = await col.insertOne({
-            // _id: "7864972364724b4h2b4jhgh42",
-            title: req.body.title,
-            text: req.body.text,
-            createdOn: new Date()
-        });
-        console.log("insertResponse: ", insertResponse);
-
-        res.send('post created');
-    } catch (e) {
-        console.log("error inserting mongodb: ", e);
-        res.status(500).send('server error, please try later');
-    }
+    //     res.send('post created');
+    // } catch (e) {
+    //     console.log("error inserting mongodb: ", e);
+    //     res.status(500).send('server error, please try later');
+    // }
 });
 
 // router.get('/posts', async (req, res, next) => {
