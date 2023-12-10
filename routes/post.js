@@ -267,6 +267,33 @@ const router = express.Router();
 router.get('/post', (req, res, next) => {
     console.log('this!', new Date());
     res.send('this' + new Date());
+
+    const { title, text } = req.body;
+
+    const isValidRequest = title && text;
+
+    try {
+        if (isValidRequest) {
+            col.insertOne({
+                title,
+                text,
+                createdOn: new Date()
+            }, (err, result) => {
+                if (err) {
+                    console.log("error inserting mongodb: ", err);
+                    res.status(500).send('Server error, please try later');
+                } else {
+                    console.log("insertResponse: ", result);
+                    res.send('Post created');
+                }
+            });
+        } else {
+            res.status(403).send(`Required parameters missing. Example request body: { "title": "abc post title", "text": "some post text" }`);
+        }
+    } catch (e) {
+        console.log("error inserting mongodb: ", e);
+        res.status(500).send('Server error, please try later');
+    }
 });
 
 // POST /api/v1/post
