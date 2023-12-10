@@ -265,21 +265,26 @@ const col = db.collection("posts");
 const router = express.Router();
 
 // POST /api/v1/post
-router.post('/post', async (req, res, next) => {
+router.post('/post', (req, res, next) => {
     const { title, text } = req.body;
 
     const isValidRequest = title && text;
 
     try {
         if (isValidRequest) {
-            const insertResponse = await col.insertOne({
+            col.insertOne({
                 title,
                 text,
                 createdOn: new Date()
+            }, (err, result) => {
+                if (err) {
+                    console.log("error inserting mongodb: ", err);
+                    res.status(500).send('Server error, please try later');
+                } else {
+                    console.log("insertResponse: ", result);
+                    res.send('Post created');
+                }
             });
-            console.log("insertResponse: ", insertResponse);
-
-            res.send('post created');
         } else {
             res.status(403).send(`Required parameters missing. Example request body: { "title": "abc post title", "text": "some post text" }`);
         }
@@ -290,15 +295,21 @@ router.post('/post', async (req, res, next) => {
 });
 
 // GET /api/v1/posts
-router.get('/posts', async (req, res, next) => {
+router.get('/posts', (req, res, next) => {
     try {
         const cursor = col.find({})
             .sort({ _id: -1 })
             .limit(100);
 
-        const results = await cursor.toArray();
-        console.log("results: ", results);
-        res.send(results);
+        cursor.toArray((err, results) => {
+            if (err) {
+                console.log("error getting data from mongodb: ", err);
+                res.status(500).send('Server error, please try later');
+            } else {
+                console.log("results: ", results);
+                res.send(results);
+            }
+        });
     } catch (e) {
         console.log("error getting data from mongodb: ", e);
         res.status(500).send('Server error, please try later');
@@ -306,7 +317,7 @@ router.get('/posts', async (req, res, next) => {
 });
 
 // PUT /api/v1/post/:postId
-router.put('/post/:postId', async (req, res, next) => {
+router.put('/post/:postId', (req, res, next) => {
     const { title, text } = req.body;
     const postId = req.params.postId;
 
@@ -314,13 +325,19 @@ router.put('/post/:postId', async (req, res, next) => {
 
     try {
         if (isValidRequest) {
-            const updateResponse = await col.updateOne(
+            col.updateOne(
                 { _id: new ObjectId(postId) },
-                { $set: { title, text } }
+                { $set: { title, text } },
+                (err, result) => {
+                    if (err) {
+                        console.log("error updating mongodb: ", err);
+                        res.status(500).send('Server error, please try later');
+                    } else {
+                        console.log("updateResponse: ", result);
+                        res.send('Post updated');
+                    }
+                }
             );
-            console.log("updateResponse: ", updateResponse);
-
-            res.send('Post updated');
         } else {
             res.status(403).send(`Invalid request. At least one of "title" or "text" is required.`);
         }
@@ -331,16 +348,22 @@ router.put('/post/:postId', async (req, res, next) => {
 });
 
 // DELETE /api/v1/post/:postId
-router.delete('/post/:postId', async (req, res, next) => {
+router.delete('/post/:postId', (req, res, next) => {
     const postId = req.params.postId;
 
     const isValidRequest = ObjectId.isValid(postId);
 
     try {
         if (isValidRequest) {
-            const deleteResponse = await col.deleteOne({ _id: new ObjectId(postId) });
-            console.log("deleteResponse: ", deleteResponse);
-            res.send('Post deleted');
+            col.deleteOne({ _id: new ObjectId(postId) }, (err, result) => {
+                if (err) {
+                    console.log("error deleting mongodb: ", err);
+                    res.status(500).send('Server error, please try later');
+                } else {
+                    console.log("deleteResponse: ", result);
+                    res.send('Post deleted');
+                }
+            });
         } else {
             res.status(403).send(`Invalid post id`);
         }
