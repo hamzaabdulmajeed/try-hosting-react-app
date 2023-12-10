@@ -197,61 +197,61 @@ router.put('/post/:postId', async (req, res, next) => {
       return;
   }
 
-//   if (!req.body.text
-//       && !req.body.title) {
-//       res.status(403).send(`required parameter missing, atleast one key is required.
-//       example put body: 
-//       PUT     /api/v1/post/:postId
-//       {
-//           title: "updated title",
-//           text: "updated text"
-//       }
-//       `);
-//   }
+  if (!req.body.text
+      && !req.body.title) {
+      res.status(403).send(`required parameter missing, atleast one key is required.
+      example put body: 
+      PUT     /api/v1/post/:postId
+      {
+          title: "updated title",
+          text: "updated text"
+      }
+      `);
+  }
 
-//   let dataToBeUpdated = {};
+  let dataToBeUpdated = {};
 
-//   if (req.body.title) { dataToBeUpdated.title = req.body.title }
-//   if (req.body.text) { dataToBeUpdated.text = req.body.text }
+  if (req.body.title) { dataToBeUpdated.title = req.body.title }
+  if (req.body.text) { dataToBeUpdated.text = req.body.text }
 
-//   try {
-//       const updateResponse = await col.updateOne(
-//           {
-//               _id: new ObjectId(req.params.postId)
-//           },
-//           {
-//               $set: dataToBeUpdated
-//           });
-//       console.log("updateResponse: ", updateResponse);
+  try {
+      const updateResponse = await col.updateOne(
+          {
+              _id: new ObjectId(req.params.postId)
+          },
+          {
+              $set: dataToBeUpdated
+          });
+      console.log("updateResponse: ", updateResponse);
 
-//       res.send('post updated');
-//   } catch (e) {
-//       console.log("error inserting mongodb: ", e);
-//       res.status(500).send('server error, please try later');
-//   }
-// });
+      res.send('post updated');
+  } catch (e) {
+      console.log("error inserting mongodb: ", e);
+      res.status(500).send('server error, please try later');
+  }
+});
 
-// // DELETE  /api/v1/post/:postId
-// router.delete('/post/:postId', async (req, res, next) => {
+// DELETE  /api/v1/post/:postId
+router.delete('/post/:postId', async (req, res, next) => {
 
-//   if (!ObjectId.isValid(req.params.postId)) {
-//       res.status(403).send(`Invalid post id`);
-//       return;
-//   }
+  if (!ObjectId.isValid(req.params.postId)) {
+      res.status(403).send(`Invalid post id`);
+      return;
+  }
 
-//   try {
-//       const deleteResponse = await col.deleteOne({ _id: new ObjectId(req.params.postId) });
-//       console.log("deleteResponse: ", deleteResponse);
-//       res.send('post deleted');
-//   } catch (e) {
-//       console.log("error deleting mongodb: ", e);
-//       res.status(500).send('server error, please try later');
-//   }
+  try {
+      const deleteResponse = await col.deleteOne({ _id: new ObjectId(req.params.postId) });
+      console.log("deleteResponse: ", deleteResponse);
+      res.send('post deleted');
+  } catch (e) {
+      console.log("error deleting mongodb: ", e);
+      res.status(500).send('server error, please try later');
+  }
 
-//   // const deleteResponse = await pcIndex.deleteOne(req.params.postId)
-//   // console.log("deleteResponse: ", deleteResponse);
+  // const deleteResponse = await pcIndex.deleteOne(req.params.postId)
+  // console.log("deleteResponse: ", deleteResponse);
 
-//   // res.send('post deleted');
+  // res.send('post deleted');
 });
 
 module.exports = router;
