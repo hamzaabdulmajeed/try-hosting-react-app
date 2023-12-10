@@ -141,7 +141,7 @@ const express = require('express');
 const router = express.Router();
 
 // POST    /api/v1/post
-router.get('/post', async (req, res, next) => {
+router.get('/post', (req, res, next) => {
     console.log('this is signup!', new Date());
     res.send('this is post' + new Date());
     // if (
