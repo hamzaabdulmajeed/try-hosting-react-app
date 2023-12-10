@@ -272,9 +272,9 @@ const router = express.Router();
 // POST /api/v1/post
 router.get('/post', (req, res, next) => {
     res.send('post' + new Date());
-    // const { title, text } = req.body;
+    const { title, text } = req.body;
 
-    // const isValidRequest = title && text;
+    const isValidRequest = title && text;
 
     // try {
     //     if (isValidRequest) {
