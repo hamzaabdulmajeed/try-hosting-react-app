@@ -35,28 +35,96 @@
 // //     /static/vscode_windows.exe
 // // app.use("/static", express.static(path.join(__dirname, "static")));
 
-// // app.use(express.static(path.join(__dirname, "static")));
+// app.use(express.static(path.join(__dirname, "static")));
 
 // const PORT = 4000;
 // app.listen(PORT, () => {
 //   console.log(`Example server listening on port ${PORT}`);
 // });
-const express = require('express')
+// const cors = require("cors");
+// const path =require('path');
+// const _dirname = path.resolve();
+// const postRouter =require("./routes/post.js");
+// const authRouter =require("./routes/auth.js");
 
-const app = express()
-const PORT = 4000
+// const express = require('express')
 
-app.listen(PORT, () => {
-  console.log(`API listening on PORT ${PORT} `)
-})
+// const app = express()
+// const PORT = 4000
+
+// app.use(express.json()); // body parser
+// app.use(cors());
+
+// app.get('/', (req, res) => {
+//   res.send('Hey this is my API running 🥳')
+// })
+// // app.get('/about', (req, res) => {
+// //   res.send('This is my about route..... ')
+// // })
+// app.use("/api/v1", authRouter);
+
+// app.use((req, res, next) => {
+//   // JWT
+//   let token = "valid";
+//   if (token === "valid") {
+//     next();
+//   } else {
+//     res.status(401).send({ message: "invalid token" });
+//   }
+// });
+//  app.use("/api/v1", postRouter); // Secure api
+
+//     // /static/vscode_windows.exe
+// app.use("/static", express.static(path.join(__dirname, "static")));
+// app.use(express.static(path.join(__dirname, "static")));
+
+
+
+
+
+// app.listen(PORT, () => {
+//   console.log(`API listening on PORT ${PORT} `)
+// })
+
+// module.exports = app
+
+const cors = require("cors");
+const path = require('path');
+const _dirname = path.resolve();
+const postRouter = require("./routes/post.js");
+const authRouter = require("./routes/auth.js");
+
+const express = require('express');
+
+const app = express();
+const PORT = 4000;
+
+app.use(express.json()); // body parser
+app.use(cors());
 
 app.get('/', (req, res) => {
-  res.send('Hey this is my API running 🥳')
-})
+  res.send('Hey, this is my API running 🥳');
+});
 
-app.get('/about', (req, res) => {
-  res.send('This is my about route..... ')
-})
+app.use("/api/v1", authRouter);
 
-// Export the Express API
-module.exports = app
+app.use((req, res, next) => {
+  // JWT
+  let token = "valid";
+  if (token === "valid") {
+    next();
+  } else {
+    res.status(401).send({ message: "invalid token" });
+  }
+});
+
+app.use("/api/v1", postRouter); // Secure api
+
+// Serving static files from the "static" directory
+app.use("/static", express.static(path.join(__dirname, "static")));
+
+app.listen(PORT, () => {
+  console.log(`API listening on PORT ${PORT} `);
+});
+
+module.exports = app;

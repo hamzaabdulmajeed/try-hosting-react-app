@@ -141,7 +141,7 @@ const col = db.collection("posts");
 const router = express.Router();
 
 // POST    /api/v1/post
-router.post('/post', async (req, res, next) => {
+router.get('/post', async (req, res, next) => {
     console.log('this is signup!', new Date());
 
     if (
