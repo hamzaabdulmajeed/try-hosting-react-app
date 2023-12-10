@@ -91,7 +91,7 @@
 const cors = require("cors");
 const path = require('path');
 const _dirname = path.resolve();
-const postRouter = require("./routes/post.js");
+// const postRouter = require("./routes/post.js");
 const authRouter = require("./routes/auth.js");
 
 const express = require('express');
@@ -118,7 +118,7 @@ app.use((req, res, next) => {
   }
 });
 
-app.use("/api/v1", postRouter); // Secure api
+// app.use("/api/v1", postRouter); // Secure api
 
 // Serving static files from the "static" directory
 app.use("/static", express.static(path.join(__dirname, "static")));
